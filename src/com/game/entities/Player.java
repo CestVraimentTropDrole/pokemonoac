@@ -1,9 +1,8 @@
 package com.game.entities;
 
-import java.awt.Color;
 import java.awt.Graphics;
-// import java.awt.Image;
-// import javax.swing.ImageIcon;
+import java.awt.Image;
+import javax.swing.ImageIcon;
 
 
 public class Player {
@@ -13,15 +12,14 @@ public class Player {
     private boolean moving = false;  // État de déplacement
     private int targetX, targetY;  // Destination du déplacement
 
-    //private Image sprite;  // Image du joueur
+    private Image sprite;  // Image du joueur
 
     public Player(int startX, int startY) {
         this.x = startX;
         this.y = startY;
         this.targetX = x;
         this.targetY = y;
-        // A tester quand image mise
-        // this.sprite = new ImageIcon("assets/sprites/player.png").getImage();
+        this.sprite = new ImageIcon("assets/sprites/player_sprite.png").getImage();
     }
 
     public void update() {
@@ -46,10 +44,7 @@ public class Player {
     }
 
     public void draw(Graphics g) {
-        // A tester après l'image
-        // g.drawImage(sprite, x, y, null);
-        g.setColor(Color.BLUE);
-        g.fillRect(x, y, gridSize, gridSize);
+        g.drawImage(sprite, x, y, null);
     }
 
 }
