@@ -1,22 +1,50 @@
 package com.game.core;
 
-import java.awt.event.KeyListener;
-import java.awt.event.KeyEvent;
 import javax.swing.JPanel;
 import java.awt.Color;
 import java.awt.Graphics;
 
 import com.game.entities.Player;
+import com.game.input.KeyboardInput;
 
 
-public class GamePanel extends JPanel implements KeyListener {
+public class GamePanel extends JPanel implements Runnable {
     private Player player;
+    private boolean running;
+    private final int FPS = 30;  // Limite le jeu à 30 images/seconde
 
     public GamePanel() {
         this.player = new Player(100, 100);  // Initialisation du joueur
-        addKeyListener(this);  // Écouteur du clavier
         setFocusable(true);
         setFocusTraversalKeysEnabled(false);
+        addKeyListener(new KeyboardInput(player));  // Gestion des touches
+
+        running = true;
+        new Thread(this).start();  // Démarre la boucle du jeu
+    }
+
+    @Override
+    public void run() {
+        long lastTime = System.nanoTime();
+        double nsPerTick = 1_000_000_000.0 / FPS;
+        double delta = 0;
+
+        while (running) {
+            long now = System.nanoTime();
+            delta += (now - lastTime) / nsPerTick;
+            lastTime = now;
+
+            while (delta >= 1) {
+                update();  // Mise à jour des positions
+                delta--;
+            }
+
+            repaint();  // Redessine l'écran
+        }
+    }
+
+    private void update() {
+        player.update();  // Met à jour la position du joueur
     }
 
     @Override
@@ -25,20 +53,5 @@ public class GamePanel extends JPanel implements KeyListener {
         g.setColor(Color.BLUE);
         player.draw(g); // Dessiner le joueur
     }
-
-    @Override
-    public void keyPressed(KeyEvent e) {
-        int key = e.getKeyCode();
-        switch (key) {
-            case KeyEvent.VK_LEFT -> player.moveLeft();
-            case KeyEvent.VK_RIGHT -> player.moveRight();
-            case KeyEvent.VK_UP -> player.moveUp();
-            case KeyEvent.VK_DOWN -> player.moveDown();
-        }
-        repaint();  // Redessine la fenêtre après un mouvement
-    }
-
-    @Override public void keyReleased(KeyEvent e) {}
-    @Override public void keyTyped(KeyEvent e) {}
     
 }
