@@ -4,42 +4,56 @@ import java.awt.Graphics;
 import java.awt.Image;
 import javax.swing.ImageIcon;
 
-
 public class Player {
-    int x,y;  // Position du joueur
-    int gridSize = 80;  // Dimensions du joueur
-    int speed = 20;  // Vitesse du joueur
-    private boolean moving = false;  // État de déplacement
-    private int targetX, targetY;  // Destination du déplacement
+    int x, y; // Position du joueur
+    int gridSize = 80; // Dimensions du joueur
+    int speed = 20; // Vitesse du joueur
+    private boolean moving = false; // État de déplacement
+    private int targetX, targetY; // Destination du déplacement
 
-    private Image sprite;  // Image du joueur
+    private int screenW, screenH; // Dimensions de l'écran
 
-    public Player(int startX, int startY) {
+    private Image sprite; // Image du joueur
+
+    public Player(int startX, int startY, int screenW, int screenH) {
         this.x = startX;
         this.y = startY;
         this.targetX = x;
         this.targetY = y;
+        this.screenW = screenW;
+        this.screenH = screenH;
         this.sprite = new ImageIcon("assets/sprites/player_sprite.png").getImage();
     }
 
     public void update() {
         if (moving) {
-            if (x < targetX) x += speed;
-            if (x > targetX) x -= speed;
-            if (y < targetY) y += speed;
-            if (y > targetY) y -= speed;
+            if (x < targetX)
+                x += speed;
+            if (x > targetX)
+                x -= speed;
+            if (y < targetY)
+                y += speed;
+            if (y > targetY)
+                y -= speed;
 
             if (x == targetX && y == targetY) {
-                moving = false;  // Arrêt du déplacement
+                moving = false; // Arrêt du déplacement
             }
         }
     }
 
     public void move(int dx, int dy) {
-        if (!moving) {  // Si le joueur n'est pas déjà en train de bouger
-            targetX = x + dx * gridSize;
-            targetY = y + dy * gridSize;
-            moving = true;
+        if (!moving) { // Si le joueur n'est pas déjà en train de bouger
+            int newTargetX = x + dx * gridSize;
+            int newTargetY = y + dy * gridSize;
+
+            // Vérification des limites de l'écran
+            if (newTargetX >= 0 && newTargetX + gridSize <= screenW &&
+                    newTargetY >= 0 && newTargetY + gridSize <= screenH) {
+                targetX = x + dx * gridSize;
+                targetY = y + dy * gridSize;
+                moving = true;
+            }
         }
     }
 
@@ -48,7 +62,12 @@ public class Player {
     }
 
     // Getters
-    public int getX() { return x; }
-    public int getY() { return y; }
+    public int getX() {
+        return x;
+    }
+
+    public int getY() {
+        return y;
+    }
 
 }

@@ -11,10 +11,13 @@ import com.game.input.KeyboardInput;
 public class GamePanel extends JPanel implements Runnable {
     private Player player;
     private boolean running;
+    private int WIDTH, HEIGHT;
     private final int FPS = 30;  // Limite le jeu à 30 images/seconde
 
-    public GamePanel() {
-        this.player = new Player(0, 0);  // Initialisation du joueur
+    public GamePanel(int screenW, int screenH) {
+        this.WIDTH = screenW;
+        this.HEIGHT = screenH;
+        this.player = new Player(0, 0, WIDTH, HEIGHT);  // Initialisation du joueur
         setFocusable(true);
         setFocusTraversalKeysEnabled(false);
         addKeyListener(new KeyboardInput(player));  // Gestion des touches
