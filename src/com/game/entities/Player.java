@@ -47,4 +47,8 @@ public class Player {
         g.drawImage(sprite, x, y, null);
     }
 
+    // Getters
+    public int getX() { return x; }
+    public int getY() { return y; }
+
 }

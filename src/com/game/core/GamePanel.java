@@ -14,7 +14,7 @@ public class GamePanel extends JPanel implements Runnable {
     private final int FPS = 30;  // Limite le jeu à 30 images/seconde
 
     public GamePanel() {
-        this.player = new Player(100, 100);  // Initialisation du joueur
+        this.player = new Player(0, 0);  // Initialisation du joueur
         setFocusable(true);
         setFocusTraversalKeysEnabled(false);
         addKeyListener(new KeyboardInput(player));  // Gestion des touches

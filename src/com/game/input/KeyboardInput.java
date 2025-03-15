@@ -19,6 +19,7 @@ public class KeyboardInput implements KeyListener {
             case KeyEvent.VK_RIGHT -> player.move(1, 0);
             case KeyEvent.VK_UP -> player.move(0, -1);
             case KeyEvent.VK_DOWN -> player.move(0, 1);
+            // case KeyEvent.VK_ENTER -> Interaction
         }
     }
 
