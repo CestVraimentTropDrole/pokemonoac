@@ -1,8 +1,10 @@
 package com.game.core;
 
 import javax.swing.JPanel;
-import java.awt.Color;
-import java.awt.Graphics;
+import java.awt.*;
+import java.awt.image.BufferedImage;
+import java.io.File;
+import javax.imageio.ImageIO;
 
 import com.game.entities.Player;
 import com.game.input.KeyboardInput;
@@ -14,6 +16,8 @@ public class GamePanel extends JPanel implements Runnable {
     private int WIDTH, HEIGHT;
     private final int FPS = 30;  // Limite le jeu à 30 images/seconde
 
+    private BufferedImage backgroundImage;
+
     public GamePanel(int screenW, int screenH) {
         this.WIDTH = screenW;
         this.HEIGHT = screenH;
@@ -22,8 +26,30 @@ public class GamePanel extends JPanel implements Runnable {
         setFocusTraversalKeysEnabled(false);
         addKeyListener(new KeyboardInput(player));  // Gestion des touches
 
+        // Charge l'image de fond
+        try {
+            backgroundImage = ImageIO.read(new File("assets/backgrounds/background.png"));
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
         running = true;
         new Thread(this).start();  // Démarre la boucle du jeu
+    }
+
+    @Override
+    public void paintComponent(Graphics g) {
+        super.paintComponent(g);
+
+        // Affiche l'image de fond
+        if (backgroundImage != null) {
+            g.drawImage(backgroundImage, 0, 0, WIDTH, HEIGHT, null);
+        } else {
+            g.setColor(Color.BLACK);
+            g.fillRect(0, 0, WIDTH, HEIGHT);
+        }
+
+        player.draw(g); // Affiche le joueur
     }
 
     @Override
@@ -48,13 +74,5 @@ public class GamePanel extends JPanel implements Runnable {
 
     private void update() {
         player.update();  // Met à jour la position du joueur
-    }
-
-    @Override
-    public void paintComponent(Graphics g) {
-        super.paintComponent(g);
-        g.setColor(Color.BLUE);
-        player.draw(g); // Dessiner le joueur
-    }
-    
+    }    
 }
