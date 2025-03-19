@@ -6,8 +6,8 @@ import javax.swing.ImageIcon;
 
 public class Player {
     int x, y; // Position du joueur
-    int gridSize = 80; // Dimensions du joueur
-    int speed = 20; // Vitesse du joueur
+    int gridSize = 16; // Dimensions du joueur
+    int speed = 4; // Vitesse du joueur
     private boolean moving = false; // État de déplacement
     private int targetX, targetY; // Destination du déplacement
 
@@ -15,13 +15,17 @@ public class Player {
 
     private Image sprite; // Image du joueur
 
-    public Player(int startX, int startY, int screenW, int screenH) {
+    public Player(int startX, int startY, int screenW, int screenH, int scale) {
         this.x = startX;
         this.y = startY;
         this.targetX = x;
         this.targetY = y;
         this.screenW = screenW;
         this.screenH = screenH;
+
+        this.gridSize *= scale;
+        this.speed *= scale;
+
         this.sprite = new ImageIcon("assets/sprites/player_sprite.png").getImage();
     }
 
@@ -58,7 +62,7 @@ public class Player {
     }
 
     public void draw(Graphics g) {
-        g.drawImage(sprite, x, y, null);
+        g.drawImage(sprite, x, y, gridSize, gridSize, null);
     }
 
     // Getters

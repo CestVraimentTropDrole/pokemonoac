@@ -2,12 +2,13 @@ package com.game.core;
 
 import javax.swing.JPanel;
 import java.awt.*;
-import java.awt.image.BufferedImage;
-import java.io.File;
-import javax.imageio.ImageIO;
+// import java.awt.image.BufferedImage;
+// import java.io.File;
+// import javax.imageio.ImageIO;
 
 import com.game.entities.Player;
 import com.game.input.KeyboardInput;
+import com.game.map.Map;
 
 
 public class GamePanel extends JPanel implements Runnable {
@@ -15,23 +16,39 @@ public class GamePanel extends JPanel implements Runnable {
     private boolean running;
     private int WIDTH, HEIGHT;
     private final int FPS = 30;  // Limite le jeu à 30 images/seconde
+    private int SCALE;
 
-    private BufferedImage backgroundImage;
+    private Map gameMap;
+    // private BufferedImage backgroundImage;
 
-    public GamePanel(int screenW, int screenH) {
+    public GamePanel(int screenW, int screenH, int scale) {
         this.WIDTH = screenW;
         this.HEIGHT = screenH;
-        this.player = new Player(0, 0, WIDTH, HEIGHT);  // Initialisation du joueur
+        this.SCALE = scale;
+        this.player = new Player(0, 0, WIDTH, HEIGHT, SCALE);  // Initialisation du joueur
         setFocusable(true);
         setFocusTraversalKeysEnabled(false);
         addKeyListener(new KeyboardInput(player));  // Gestion des touches
+        setPreferredSize(new Dimension(WIDTH, HEIGHT));
 
         // Charge l'image de fond
-        try {
-            backgroundImage = ImageIO.read(new File("assets/backgrounds/background.png"));
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
+        // try {
+            // backgroundImage = ImageIO.read(new File("assets/backgrounds/background.png"));
+        // } catch (Exception e) {
+            // e.printStackTrace();
+        // }
+
+        int[][] mapData = {
+            {0, 1, 0, 1, 0, 1, 0, 1, 0, 1}
+        };
+
+        // Chemins des images des tiles
+        String[] tilePaths = {
+            "assets/tiles/grass.png",
+            "assets/tiles/path.png"
+        };
+
+        gameMap = new Map(mapData, tilePaths, 16 * SCALE);
 
         running = true;
         new Thread(this).start();  // Démarre la boucle du jeu
@@ -41,13 +58,7 @@ public class GamePanel extends JPanel implements Runnable {
     public void paintComponent(Graphics g) {
         super.paintComponent(g);
 
-        // Affiche l'image de fond
-        if (backgroundImage != null) {
-            g.drawImage(backgroundImage, 0, 0, WIDTH, HEIGHT, null);
-        } else {
-            g.setColor(Color.BLACK);
-            g.fillRect(0, 0, WIDTH, HEIGHT);
-        }
+        gameMap.draw(g);
 
         player.draw(g); // Affiche le joueur
     }
