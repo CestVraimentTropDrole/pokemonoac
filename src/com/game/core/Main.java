@@ -12,7 +12,7 @@ public class Main {
         GamePanel gamePanel = new GamePanel(WIDTH, HEIGHT, SCALE);
 
         frame.add(gamePanel);
-        frame.setSize(WIDTH, HEIGHT);  // Dimensions GBC fois 5
+        frame.setSize(WIDTH, HEIGHT);
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         frame.setLocationRelativeTo(null);
         frame.pack(); 

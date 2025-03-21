@@ -11,17 +11,13 @@ public class Player {
     private boolean moving = false; // État de déplacement
     private int targetX, targetY; // Destination du déplacement
 
-    private int screenW, screenH; // Dimensions de l'écran
-
     private Image sprite; // Image du joueur
 
-    public Player(int startX, int startY, int screenW, int screenH, int scale) {
+    public Player(int startX, int startY, int scale) {
         this.x = startX;
         this.y = startY;
         this.targetX = x;
         this.targetY = y;
-        this.screenW = screenW;
-        this.screenH = screenH;
 
         this.gridSize *= scale;
         this.speed *= scale;
@@ -48,16 +44,9 @@ public class Player {
 
     public void move(int dx, int dy) {
         if (!moving) { // Si le joueur n'est pas déjà en train de bouger
-            int newTargetX = x + dx * gridSize;
-            int newTargetY = y + dy * gridSize;
-
-            // Vérification des limites de l'écran
-            if (newTargetX >= 0 && newTargetX + gridSize <= screenW &&
-                    newTargetY >= 0 && newTargetY + gridSize <= screenH) {
-                targetX = x + dx * gridSize;
-                targetY = y + dy * gridSize;
-                moving = true;
-            }
+            targetX = x + dx * gridSize;
+            targetY = y + dy * gridSize;
+            moving = true;
         }
     }
 

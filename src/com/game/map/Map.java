@@ -6,11 +6,8 @@ import java.util.List;
 
 public class Map {
     private List<Tile> tiles = new ArrayList<>();
-    private int tileSize;
 
     public Map(int[][] mapData, String[] tilePaths, int tileSize) {
-        this.tileSize = tileSize;
-
         for (int i=0; i<mapData.length; i++) {
             for (int j=0; j<mapData[i].length; j++) {
                 int tileIndex = mapData[i][j];

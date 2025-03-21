@@ -2,9 +2,6 @@ package com.game.core;
 
 import javax.swing.JPanel;
 import java.awt.*;
-// import java.awt.image.BufferedImage;
-// import java.io.File;
-// import javax.imageio.ImageIO;
 
 import com.game.entities.Player;
 import com.game.input.KeyboardInput;
@@ -19,27 +16,28 @@ public class GamePanel extends JPanel implements Runnable {
     private int SCALE;
 
     private Map gameMap;
-    // private BufferedImage backgroundImage;
 
     public GamePanel(int screenW, int screenH, int scale) {
         this.WIDTH = screenW;
         this.HEIGHT = screenH;
         this.SCALE = scale;
-        this.player = new Player(0, 0, WIDTH, HEIGHT, SCALE);  // Initialisation du joueur
+        this.player = new Player(0, 0, SCALE);  // Initialisation du joueur
         setFocusable(true);
         setFocusTraversalKeysEnabled(false);
         addKeyListener(new KeyboardInput(player));  // Gestion des touches
         setPreferredSize(new Dimension(WIDTH, HEIGHT));
 
-        // Charge l'image de fond
-        // try {
-            // backgroundImage = ImageIO.read(new File("assets/backgrounds/background.png"));
-        // } catch (Exception e) {
-            // e.printStackTrace();
-        // }
-
         int[][] mapData = {
-            {0, 1, 0, 1, 0, 1, 0, 1, 0, 1}
+            {0, 1, 0, 1, 0, 1, 0, 1, 0, 1},
+            {0, 1, 0, 1, 0, 1, 0, 1, 0, 1},
+            {0, 1, 0, 1, 0, 1, 0, 1, 0, 1},
+            {0, 1, 0, 1, 0, 1, 0, 1, 0, 1},
+            {0, 1, 0, 1, 0, 1, 0, 1, 0, 1},
+            {0, 1, 0, 1, 0, 1, 0, 1, 0, 1},
+            {0, 1, 0, 1, 0, 1, 0, 1, 0, 1},
+            {0, 1, 0, 1, 0, 1, 0, 1, 0, 1},
+            {0, 1, 0, 1, 0, 1, 0, 1, 0, 1},
+            {0, 1, 0, 1, 0, 1, 0, 1, 0, 1},
         };
 
         // Chemins des images des tiles
