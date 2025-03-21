@@ -14,7 +14,6 @@ public class GamePanel extends JPanel implements Runnable {
     private int WIDTH, HEIGHT;
     private final int FPS = 30;  // Limite le jeu à 30 images/seconde
     private int SCALE;
-
     private Map gameMap;
 
     public GamePanel(int screenW, int screenH, int scale) {
@@ -27,26 +26,16 @@ public class GamePanel extends JPanel implements Runnable {
         addKeyListener(new KeyboardInput(player));  // Gestion des touches
         setPreferredSize(new Dimension(WIDTH, HEIGHT));
 
-        int[][] mapData = {
-            {0, 1, 0, 1, 0, 1, 0, 1, 0, 1},
-            {0, 1, 0, 1, 0, 1, 0, 1, 0, 1},
-            {0, 1, 0, 1, 0, 1, 0, 1, 0, 1},
-            {0, 1, 0, 1, 0, 1, 0, 1, 0, 1},
-            {0, 1, 0, 1, 0, 1, 0, 1, 0, 1},
-            {0, 1, 0, 1, 0, 1, 0, 1, 0, 1},
-            {0, 1, 0, 1, 0, 1, 0, 1, 0, 1},
-            {0, 1, 0, 1, 0, 1, 0, 1, 0, 1},
-            {0, 1, 0, 1, 0, 1, 0, 1, 0, 1},
-            {0, 1, 0, 1, 0, 1, 0, 1, 0, 1},
-        };
+        String mapData = "assets/maps/map.csv"; // Données de la map
 
         // Chemins des images des tiles
         String[] tilePaths = {
             "assets/tiles/grass.png",
-            "assets/tiles/path.png"
+            "assets/tiles/path.png",
+            "assets/tiles/water.png",
         };
 
-        gameMap = new Map(mapData, tilePaths, 16 * SCALE);
+        gameMap = new Map(mapData, tilePaths, SCALE);
 
         running = true;
         new Thread(this).start();  // Démarre la boucle du jeu

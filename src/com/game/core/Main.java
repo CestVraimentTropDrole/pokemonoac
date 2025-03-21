@@ -15,7 +15,7 @@ public class Main {
         frame.setSize(WIDTH, HEIGHT);
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         frame.setLocationRelativeTo(null);
-        frame.pack(); 
+        frame.pack();   // Mettre la taille de la fenêtre aux dimensions
         frame.setResizable(false);
         frame.setVisible(true);
     }
