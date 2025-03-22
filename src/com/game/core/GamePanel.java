@@ -24,8 +24,7 @@ public class GamePanel extends JPanel implements Runnable {
         this.HEIGHT = screenH;
         this.SCALE = scale;
         this.player = new Player(0, 0, SCALE);  // Initialisation du joueur
-        bgm = new SoundPlayer("assets/musics/new_bark_town.wav");
-        bgm.loop();
+        bgm = new SoundPlayer("assets/musics/new_bark_town.wav");   // Initialisation de la musique
         setFocusable(true);
         setFocusTraversalKeysEnabled(false);
         addKeyListener(new KeyboardInput(player));  // Gestion des touches
@@ -46,7 +45,13 @@ public class GamePanel extends JPanel implements Runnable {
         new Thread(this).start();  // Démarre la boucle du jeu
     }
 
-    // Méthodes Publiques
+    @Override
+    public void addNotify() {   // La musique se lance quand la fenêtre s'ouvre
+        super.addNotify();
+        bgm.loop();
+        bgm.play();
+    }
+
     @Override
     public void paintComponent(Graphics g) {
         super.paintComponent(g);
@@ -79,5 +84,10 @@ public class GamePanel extends JPanel implements Runnable {
     // Méthodes Privées
     private void update() {
         player.update();  // Met à jour la position du joueur
-    }    
+
+        if (player.getX() > 200 && bgm.getMusic() != "assets/musics/opening1.wav") {
+            bgm.load("assets/musics/opening1.wav");
+            bgm.play();
+        }
+    }
 }

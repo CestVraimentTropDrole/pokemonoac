@@ -5,18 +5,12 @@ import javax.sound.sampled.*;
 import java.io.File;
 
 public class SoundPlayer {
+    public String musicPath;
     private Clip clip;
 
     // Méthode Constructeur
     public SoundPlayer(String filePath) {
-        try {
-            File file = new File(filePath);
-            AudioInputStream audioStream = AudioSystem.getAudioInputStream(file);
-            clip = AudioSystem.getClip();
-            clip.open(audioStream);
-        } catch (UnsupportedAudioFileException | IOException | LineUnavailableException e) {
-            e.printStackTrace();
-        }
+        load(filePath);
     }
 
     // Méthodes Publiques
@@ -27,6 +21,19 @@ public class SoundPlayer {
         }
     }
 
+    public void load(String filePath) {
+        stop();
+        try {
+            File file = new File(filePath);
+            AudioInputStream audioStream = AudioSystem.getAudioInputStream(file);
+            clip = AudioSystem.getClip();
+            clip.open(audioStream);
+            musicPath = filePath;
+        } catch (UnsupportedAudioFileException | IOException | LineUnavailableException e) {
+            e.printStackTrace();
+        }
+    }
+
     public void loop() {
         if (clip != null) {
             clip.loop(Clip.LOOP_CONTINUOUSLY);
@@ -34,8 +41,14 @@ public class SoundPlayer {
     }
 
     public void stop() {
-        if (clip != null) {
+        if (clip != null && clip.isRunning()) {
             clip.stop();
+            clip.close();
+            clip = null;
         }
     }
+
+    // Getters
+    public String getMusic() { return musicPath; }  // Renvoie le chemin de la musique qui est jouée
+    public boolean getRunning() { return clip.isRunning(); }    // Renvoie si de la musique est jouée
 }
