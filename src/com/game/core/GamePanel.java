@@ -6,6 +6,7 @@ import java.awt.*;
 import com.game.entities.Player;
 import com.game.input.KeyboardInput;
 import com.game.map.Map;
+import com.game.audio.SoundPlayer;
 
 
 public class GamePanel extends JPanel implements Runnable {
@@ -15,12 +16,16 @@ public class GamePanel extends JPanel implements Runnable {
     private final int FPS = 30;  // Limite le jeu à 30 images/seconde
     private int SCALE;
     private Map gameMap;
+    private SoundPlayer bgm;    // Player audio
 
+    // Méthode Constructeur
     public GamePanel(int screenW, int screenH, int scale) {
         this.WIDTH = screenW;
         this.HEIGHT = screenH;
         this.SCALE = scale;
         this.player = new Player(0, 0, SCALE);  // Initialisation du joueur
+        bgm = new SoundPlayer("assets/musics/new_bark_town.wav");
+        bgm.loop();
         setFocusable(true);
         setFocusTraversalKeysEnabled(false);
         addKeyListener(new KeyboardInput(player));  // Gestion des touches
@@ -41,6 +46,7 @@ public class GamePanel extends JPanel implements Runnable {
         new Thread(this).start();  // Démarre la boucle du jeu
     }
 
+    // Méthodes Publiques
     @Override
     public void paintComponent(Graphics g) {
         super.paintComponent(g);
@@ -70,6 +76,7 @@ public class GamePanel extends JPanel implements Runnable {
         }
     }
 
+    // Méthodes Privées
     private void update() {
         player.update();  // Met à jour la position du joueur
     }    

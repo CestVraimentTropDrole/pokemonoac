@@ -8,10 +8,12 @@ import java.awt.event.KeyListener;
 public class KeyboardInput implements KeyListener {
     private Player player;
 
+    // Méthode Constructeur
     public KeyboardInput(Player player) {
         this.player = player;
     }
 
+    // Méthodes Publiques
     @Override
     public void keyPressed(KeyEvent e) {
         switch (e.getKeyCode()) {

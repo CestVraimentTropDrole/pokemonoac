@@ -10,9 +10,9 @@ public class Player {
     int speed = 4; // Vitesse du joueur
     private boolean moving = false; // État de déplacement
     private int targetX, targetY; // Destination du déplacement
-
     private Image sprite; // Image du joueur
 
+    // Méthode Constructeur
     public Player(int startX, int startY, int scale) {
         this.x = startX;
         this.y = startY;
@@ -25,6 +25,7 @@ public class Player {
         this.sprite = new ImageIcon("assets/sprites/player_sprite.png").getImage();
     }
 
+    // Méthodes Publiques
     public void update() {
         if (moving) {
             if (x < targetX)
@@ -57,5 +58,4 @@ public class Player {
     // Getters
     public int getX() { return x; }
     public int getY() { return y; }
-
 }

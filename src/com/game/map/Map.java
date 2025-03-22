@@ -11,6 +11,7 @@ public class Map {
     private List<Tile> tiles = new ArrayList<>();
     private int tileSize = 16; // Taille des tiles
 
+    // Méthode Constructeur
     public Map(String mapFile, String[] tilePaths, int scale) {
         tileSize *= scale;  // Mettre à l'échelle les tiles
         int[][] mapData = readCSV(mapFile);
@@ -26,13 +27,14 @@ public class Map {
         }
     }
 
+    // Méthodes Publiques
     public void draw(Graphics g) {
         for (Tile tile : tiles) {
             tile.draw(g);
         }
     }
 
-
+    // Méthodes Privées
     private int[][] readCSV(String filePath) {
         ArrayList<int[]> data = new ArrayList<>();  // Liste pour stocker les lignes
 

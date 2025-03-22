@@ -9,6 +9,7 @@ public class Tile {
     private int x,y;
     private int size;
 
+    // Méthode Constructeur
     public Tile (String imagePath, int x, int y, int size) {
         this.sprite = new ImageIcon(imagePath).getImage();
         this.x = x;
@@ -16,6 +17,7 @@ public class Tile {
         this.size = size;
     }
 
+    // Méthodes Publiques
     public void draw(Graphics g) {
         g.drawImage(sprite, x, y, size, size, null);
     }
