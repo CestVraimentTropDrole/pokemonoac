@@ -10,18 +10,20 @@ import java.util.List;
 public class Map {
     private List<Tile> tiles = new ArrayList<>();
     private int tileSize = 16; // Taille des tiles
+    private Tileset tileset;
 
     // Méthode Constructeur
-    public Map(String mapFile, String[] tilePaths, int scale) {
+    public Map(String mapFile, String tilesetPath, int scale) {
         tileSize *= scale;  // Mettre à l'échelle les tiles
         int[][] mapData = readCSV(mapFile);
+        tileset = new Tileset("assets/tiles/tileset1.png");
 
         for (int i=0; i<mapData.length; i++) {  // Pour chaque colonne de la map
             for (int j=0; j<mapData[i].length; j++) {   // Pour chaque ligne de la map
                 int tileIndex = mapData[i][j];
 
-                if (tileIndex >= 0 && tileIndex < tilePaths.length) {
-                    tiles.add(new Tile(tilePaths[tileIndex], j * tileSize, i * tileSize, tileSize));
+                if (tileIndex >= 0 && tileIndex < tileset.getLenght()) {
+                    tiles.add(new Tile(tileset.getImage(tileIndex), j * tileSize, i * tileSize, tileSize));
                 }
             }
         }

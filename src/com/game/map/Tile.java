@@ -2,7 +2,7 @@ package com.game.map;
 
 import java.awt.Graphics;
 import java.awt.Image;
-import javax.swing.ImageIcon;
+import java.awt.image.BufferedImage;
 
 public class Tile {
     private Image sprite;
@@ -10,8 +10,8 @@ public class Tile {
     private int size;
 
     // Méthode Constructeur
-    public Tile (String imagePath, int x, int y, int size) {
-        this.sprite = new ImageIcon(imagePath).getImage();
+    public Tile (BufferedImage tileImage, int x, int y, int size) {
+        this.sprite = tileImage;
         this.x = x;
         this.y = y;
         this.size = size;

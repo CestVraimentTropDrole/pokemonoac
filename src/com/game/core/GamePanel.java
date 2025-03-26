@@ -24,22 +24,12 @@ public class GamePanel extends JPanel implements Runnable {
         this.HEIGHT = screenH;
         this.SCALE = scale;
         this.player = new Player(0, 0, SCALE);  // Initialisation du joueur
+        this.gameMap = new Map("assets/maps/map.csv", "assets/tiles/tileset1.png", SCALE);
         bgm = new SoundPlayer("assets/musics/new_bark_town.wav");   // Initialisation de la musique
         setFocusable(true);
         setFocusTraversalKeysEnabled(false);
         addKeyListener(new KeyboardInput(player));  // Gestion des touches
         setPreferredSize(new Dimension(WIDTH, HEIGHT));
-
-        String mapData = "assets/maps/map.csv"; // Données de la map
-
-        // Chemins des images des tiles
-        String[] tilePaths = {
-            "assets/tiles/grass.png",
-            "assets/tiles/path.png",
-            "assets/tiles/water.png",
-        };
-
-        gameMap = new Map(mapData, tilePaths, SCALE);
 
         running = true;
         new Thread(this).start();  // Démarre la boucle du jeu
@@ -84,10 +74,5 @@ public class GamePanel extends JPanel implements Runnable {
     // Méthodes Privées
     private void update() {
         player.update();  // Met à jour la position du joueur
-
-        if (player.getX() > 200 && bgm.getMusic() != "assets/musics/opening1.wav") {
-            bgm.load("assets/musics/opening1.wav");
-            bgm.play();
-        }
     }
 }
